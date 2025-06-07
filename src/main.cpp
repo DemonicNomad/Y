@@ -68,7 +68,8 @@ std::vector<Token> lex(const std::string& input) {
         }
         else if (temp == '$') {
             tokens.push_back(Token{TokenType::ENDL, std::nullopt});
-        } else {
+        }
+        else {
             std::cerr << "Nicht gut" << std::endl;
             std::exit(ERROR_EXIT);
         }
