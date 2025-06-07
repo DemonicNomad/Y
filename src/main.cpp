@@ -30,20 +30,44 @@ struct Token {
     std::optional<std::string> value {};
 };
 
+//Temp
+std::string tokensToASM(const std::vector<Token>& tokens) {
+    std::stringstream output;
+
+    output << "global _main\n";
+    output << "section .text\n" ;
+    output << "_main:\n";
+
+
+    for (int i = 0; i < tokens.size(); i++) {
+        const Token& token = tokens.at(i);
+        if (token.type == TokenType::RETURN) {
+            if (i+1 < tokens.size() && tokens[i+1].type == TokenType::INT_LIT) {
+                if (i+2 < tokens.size() && tokens[i+2].type == TokenType::ENDL) {
+                    output << "    mov eax, " + tokens[i+1].value.value() + '\n';
+                    output << "    ret";
+                }
+            }
+        }
+    }
+
+    return output.str();
+}
+
 std::vector<Token> lex(const std::string& input) {
     std::vector<Token> tokens {};
 
     std::string buf {};
-    for (int c = 0; c < input.length(); c++) {
-        const char temp = input.at(c);
+    for (int i = 0; i < input.length(); i++) {
+        const char temp = input.at(i);
         if (std::isalpha(temp)) {
             buf.push_back(temp);
-            c++;
-            while (std::isalnum(input.at(c))) {
-                buf.push_back(input.at(c));
-                c++;
+            i++;
+            while (std::isalnum(input.at(i))) {
+                buf.push_back(input.at(i));
+                i++;
             }
-            c--;
+            i--;
             if (buf == "return") {
                 tokens.push_back(Token{TokenType::RETURN, std::nullopt});
                 buf.clear();
@@ -57,12 +81,12 @@ std::vector<Token> lex(const std::string& input) {
         }
         else if (std::isdigit(temp)) {
             buf.push_back(temp);
-            c++;
-            while (std::isdigit(input.at(c))) {
-                buf.push_back(input.at(c));
-                c++;
+            i++;
+            while (std::isdigit(input.at(i))) {
+                buf.push_back(input.at(i));
+                i++;
             }
-            c--;
+            i--;
             tokens.push_back(Token{TokenType::INT_LIT, buf});
             buf.clear();
         }
@@ -101,6 +125,10 @@ int main(int argc, char* argv[]) {
 
     std::vector<Token> tokens = lex(content);
     printLexOutput(tokens);
+
+    std::ofstream output("./examples/basic.asm");
+    output << tokensToASM(tokens);
+    output.close();
 
     return SUCCESS_EXIT;
 }
