@@ -126,9 +126,10 @@ int main(int argc, char* argv[]) {
     std::vector<Token> tokens = lex(content);
     printLexOutput(tokens);
 
-    std::ofstream output("./examples/basic.asm");
-    output << tokensToASM(tokens);
-    output.close();
+    {
+        std::ofstream output("./examples/basic.asm", std::ios::out);
+        output << tokensToASM(tokens);
+    }
 
     return SUCCESS_EXIT;
 }
