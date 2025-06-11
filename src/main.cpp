@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
         content = content_stream.str();
     }
     {
-        Lexer lexer(content);
+        Lexer lexer(std::move(content));
         std::vector<Token> tokens = lexer.lex();
         std::ofstream output("./examples/basic.asm", std::ios::out);
         output << tokensToASM(tokens);
