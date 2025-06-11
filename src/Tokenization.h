@@ -33,10 +33,10 @@ public:
     [[nodiscard]] std::vector<Token> lex();
 
 private:
-    const std::string m_src;
-    int m_index;
+    const std::string m_src {};
+    int m_index{};
 
-    [[nodiscard]] std::optional<char> peek(int amount = 1) const;
+    [[nodiscard]] std::optional<char> nextChar(int peekAmount = 1) const;
     char consume();
 
 };

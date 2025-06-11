@@ -12,52 +12,49 @@ std::vector<Token> Lexer::lex() {
 
     std::string buf {};
 
-    for (int i = 0; i < m_src.length(); i++) {
-        const char temp = m_src.at(i);
-        if (std::isalpha(temp)) {
-            buf.push_back(temp);
-            i++;
-            while (std::isalnum(m_src.at(i))) {
-                buf.push_back(m_src.at(i));
-                i++;
+    while (nextChar().has_value()) {
+        //Always has value so no issue
+        if (std::isalpha(nextChar().value())) {
+            buf.push_back(consume());
+            while (nextChar().has_value() && std::isalnum(nextChar().value())) {
+                buf.push_back(consume());
             }
-            i--;
             if (buf == "exit") {
-                tokens.push_back(Token{TokenType::EXIT, std::nullopt});
+                tokens.push_back(Token {TokenType::EXIT, std::nullopt});
                 buf.clear();
             } else {
                 std::cerr << "Kein Exit :(" << std::endl;
                 std::exit(ERROR_EXIT);
             }
+
         }
-        else if (std::isspace(temp)) {
-            continue;
-        }
-        else if (std::isdigit(temp)) {
-            buf.push_back(temp);
-            i++;
-            while (std::isdigit(m_src.at(i))) {
-                buf.push_back(m_src.at(i));
-                i++;
+        else if (std::isdigit(nextChar().value())) {
+            buf.push_back(consume());
+            while (nextChar().has_value() && std::isdigit(nextChar().value())) {
+                buf.push_back(consume());
             }
-            i--;
-            tokens.push_back(Token{TokenType::INT_LIT, buf});
+            tokens.push_back(Token {TokenType::INT_LIT, buf});
             buf.clear();
         }
-        else if (temp == '$') {
-            tokens.push_back(Token{TokenType::ENDL, std::nullopt});
+        else if (nextChar().has_value() && nextChar().value() == '$') {
+            tokens.push_back(Token {TokenType::ENDL, std::nullopt});
+            consume();
+        }
+        else if (nextChar().has_value() && std::isspace(nextChar().value())) {
+            consume();
         }
         else {
             std::cerr << "Nicht gut" << std::endl;
             std::exit(ERROR_EXIT);
         }
     }
+    m_index = 0;
 
     return tokens;
 }
 
-std::optional<char> Lexer::peek(const int amount) const {
-    if (m_index + amount >= m_src.length()) {
+std::optional<char> Lexer::nextChar(const int peekAmount) const {
+    if (m_index + peekAmount > m_src.length()) {
         return std::nullopt;
     }
     return m_src.at(m_index);
