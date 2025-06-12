@@ -33,5 +33,7 @@
 
 # ASM
 /asm/
-/grammar/out/
+/grammar/out/grammar.aux
+/grammar/out/grammar.log
+/grammar/out/grammar.synctex.gz
 /grammar/auxil/
