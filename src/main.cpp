@@ -27,18 +27,16 @@ int main(int argc, char *argv[]) {
     content = content_stream.str();
   }
 
-  {
-    Lexer lexer(std::move(content));
-    std::vector<Token> tokens = lexer.lex();
-
-    Ast ast(std::move(tokens));
+  Lexer lexer(std::move(content));
+  std::vector<Token> tokens = lexer.lex();
+  Ast ast(std::move(tokens));
 
     if (auto temp = ast.parse(); temp.has_value()) {
       Generator generator(temp.value());
       std::ofstream output("./examples/basic.asm", std::ios::out);
       output << generator.generate();
     }
-  }
+
 
   return EXIT_SUCCESS;
 }
