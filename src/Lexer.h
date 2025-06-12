@@ -9,38 +9,25 @@
 #include <utility>
 #include <vector>
 
+#include "Token.h"
+
 #define ERROR_EXIT 1
 #define SUCCESS_EXIT 0
 
-
-enum class TokenType {
-    EXIT,
-    INT_LIT,
-    ENDL
-};
-
-struct Token {
-    TokenType type {TokenType::ENDL};
-    std::optional<std::string> value {};
-};
-
 class Lexer {
 public:
-    explicit Lexer(std::string src):
-    m_src(std::move(src)) {
+    explicit Lexer(std::string src) : m_src(std::move(src)) {
     }
 
     [[nodiscard]] std::vector<Token> lex();
 
 private:
-    const std::string m_src {};
+    const std::string m_src{};
     int m_index{};
 
     [[nodiscard]] std::optional<char> nextChar(int peekAmount = 1) const;
-    char consume();
 
+    char supply();
 };
 
-
-
-#endif //TOKENIZATION_H
+#endif  // TOKENIZATION_H

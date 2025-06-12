@@ -6,5 +6,6 @@ set(CMAKE_CXX_STANDARD 26)
 add_executable(YLang src/main.cpp
         src/ast.cpp
         src/ast.h
-        src/Tokenization.cpp
-        src/Tokenization.h)
+        src/Lexer.cpp
+        src/Lexer.h
+        src/Token.h)
