@@ -2,8 +2,6 @@
 // Created by mikah on 11.06.2025.
 //
 #pragma once
-#ifndef TOKENIZATION_H
-#define TOKENIZATION_H
 #include <optional>
 #include <string>
 #include <utility>
@@ -26,5 +24,3 @@ private:
 
     char supply();
 };
-
-#endif  // TOKENIZATION_H

@@ -4,8 +4,6 @@
 // Created by mikah on 11.06.2025.
 //
 
-#ifndef AST_H
-#define AST_H
 #include "Nodes.h"
 #include <vector>
 
@@ -25,7 +23,3 @@ private:
 
     Token supply();
 };
-
-
-
-#endif //AST_H

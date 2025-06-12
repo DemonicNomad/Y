@@ -3,8 +3,6 @@
 //
 #pragma once
 
-#ifndef GENERATION_H
-#define GENERATION_H
 #include <sstream>
 
 #include "Nodes.h"
@@ -22,5 +20,3 @@ private:
 };
 
 
-
-#endif //GENERATION_H
