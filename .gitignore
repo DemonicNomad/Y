@@ -33,3 +33,5 @@
 
 # ASM
 /asm/
+/grammar/out/
+/grammar/auxil/
