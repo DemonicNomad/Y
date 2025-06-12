@@ -1,0 +1,15 @@
+//
+// Created by mikah on 12.06.2025.
+//
+#pragma once
+
+#include "Token.h"
+
+namespace Node {
+    struct EXPR {
+        Token int_lit;
+    };
+    struct EXIT {
+        EXPR expr;
+    };
+}
