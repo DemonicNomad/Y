@@ -1,5 +1,5 @@
 global _main
 section .text
 _main:
-    mov eax, 42
+    mov eax, 69
     ret

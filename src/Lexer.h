@@ -11,9 +11,6 @@
 
 #include "Token.h"
 
-#define ERROR_EXIT 1
-#define SUCCESS_EXIT 0
-
 class Lexer {
 public:
     explicit Lexer(std::string src) : m_src(std::move(src)) {

@@ -25,7 +25,7 @@ std::vector<Token> Lexer::lex() {
       }
       else {
         std::cerr << "Kein Exit :(" << std::endl;
-        std::exit(ERROR_EXIT);
+        std::exit(EXIT_FAILURE);
       }
     }
     else if (std::isdigit(nextChar().value())) {
@@ -45,7 +45,7 @@ std::vector<Token> Lexer::lex() {
     }
     else {
       std::cerr << "Nicht gut" << std::endl;
-      std::exit(ERROR_EXIT);
+      std::exit(EXIT_FAILURE);
     }
   }
   m_index = 0;
