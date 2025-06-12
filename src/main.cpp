@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
     if (auto temp = ast.parse(); temp.has_value()) {
       Generator generator(temp.value());
-      std::ofstream output("./examples/basic.asm", std::ios::out);
+      std::fstream output("./examples/basic.asm", std::ios::out);
       output << generator.generate();
     }
 
