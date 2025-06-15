@@ -19,8 +19,7 @@ std::optional<Node::EXIT> Ast::parse() {
     while (nextToken().has_value()) {
         if (nextToken().value().type == TokenType::EXIT) {
             supply();
-            std::optional<Node::EXPR> node_expr = parse_expr();
-            if (node_expr.has_value()) {
+            if (std::optional<Node::EXPR> node_expr = parse_expr(); node_expr.has_value()) {
                 exit = Node::EXIT {node_expr.value()};
             } else {
                 std::cerr << "No valid expression" << std::endl;
@@ -47,5 +46,6 @@ std::optional<Token> Ast::nextToken(const int amount) const {
 }
 
 Token Ast::supply() {
-    return m_tokens.at(m_index++);
+    m_index++;
+    return m_tokens.at(m_index - 1);
 }

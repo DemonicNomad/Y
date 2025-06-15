@@ -20,7 +20,7 @@ std::vector<Token> Lexer::lex() {
         buf.push_back(supply());
       }
       if (buf == "exit") {
-        tokens.push_back(Token{TokenType::EXIT, std::nullopt});
+        tokens.emplace_back(TokenType::EXIT, std::nullopt);
         buf.clear();
       }
       else {
@@ -33,11 +33,11 @@ std::vector<Token> Lexer::lex() {
       while (nextChar().has_value() && std::isdigit(nextChar().value())) {
         buf.push_back(supply());
       }
-      tokens.push_back(Token{TokenType::INT_LIT, buf});
+      tokens.emplace_back(TokenType::INT_LIT, buf);
       buf.clear();
     }
     else if (nextChar().has_value() && nextChar().value() == '$') {
-      tokens.push_back(Token{TokenType::ENDL, std::nullopt});
+      tokens.emplace_back(TokenType::ENDL, std::nullopt);
       supply();
     }
     else if (nextChar().has_value() && std::isspace(nextChar().value())) {
@@ -60,4 +60,7 @@ std::optional<char> Lexer::nextChar(const int peekAmount) const {
   return m_src.at(m_index);
 }
 
-char Lexer::supply() { return m_src.at(m_index++); }
+char Lexer::supply() {
+  m_index++;
+  return m_src.at(m_index - 1);
+}
