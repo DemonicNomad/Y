@@ -11,7 +11,7 @@
 
 #include "Lexer.h"
 #include "Ast.h"
-#include "Generation.h"
+#include "Generator.h"
 
 int main(int argc, char *argv[]) {
   if (argc != 2) {
