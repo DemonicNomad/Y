@@ -13,7 +13,6 @@ std::vector<Token> Lexer::lex() {
   std::string buf{};
 
   while (nextChar().has_value()) {
-    // Always has value so no issue
     if (std::isalpha(nextChar().value())) {
       buf.push_back(supply());
       while (nextChar().has_value() && std::isalnum(nextChar().value())) {
@@ -35,6 +34,14 @@ std::vector<Token> Lexer::lex() {
       }
       tokens.emplace_back(TokenType::INT_LIT, buf);
       buf.clear();
+    }
+    else if (nextChar().value() == '(') {
+      supply();
+      tokens.emplace_back(TokenType::OPEN_PAREN, std::nullopt);
+    }
+    else if (nextChar().value() == ')') {
+      supply();
+      tokens.emplace_back(TokenType::CLOSE_PAREN, std::nullopt);
     }
     else if (nextChar().has_value() && nextChar().value() == '$') {
       tokens.emplace_back(TokenType::ENDL, std::nullopt);

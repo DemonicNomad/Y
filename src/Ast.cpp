@@ -17,7 +17,9 @@ std::optional<Node::EXPR> Ast::parse_expr() {
 std::optional<Node::EXIT> Ast::parse() {
     std::optional<Node::EXIT> exit;
     while (nextToken().has_value()) {
-        if (nextToken().value().type == TokenType::EXIT) {
+        if (nextToken().value().type == TokenType::EXIT &&
+            nextToken(1).has_value() && nextToken(1).value().type == TokenType::OPEN_PAREN) {
+            supply();
             supply();
             if (std::optional<Node::EXPR> node_expr = parse_expr(); node_expr.has_value()) {
                 exit = Node::EXIT {node_expr.value()};
@@ -25,10 +27,16 @@ std::optional<Node::EXIT> Ast::parse() {
                 std::cerr << "No valid expression" << std::endl;
                 std::exit(EXIT_FAILURE);
             }
+            if (nextToken().has_value() && nextToken().value().type == TokenType::CLOSE_PAREN) {
+                supply();
+            } else {
+                std::cerr << "Expected closing parenthesis" << std::endl;
+                std::exit(EXIT_FAILURE);
+            }
             if (nextToken().has_value() && nextToken().value().type == TokenType::ENDL) {
                 supply();
             } else {
-                std::cerr << "???" << std::endl;
+                std::cerr << "Expected EndLine" << std::endl;
                 std::exit(EXIT_FAILURE);
             }
         }
