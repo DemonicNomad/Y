@@ -1,2 +1,1 @@
-var x {69};
-exit x $
+exit 21 $

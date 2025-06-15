@@ -38,11 +38,11 @@ std::optional<Node::EXIT> Ast::parse() {
     return exit;
 }
 
-std::optional<Token> Ast::nextToken(const int amount) const {
-    if (m_index + amount > m_tokens.size()) {
+std::optional<Token> Ast::nextToken(const int peekAmount) const {
+    if (m_index + peekAmount >= m_tokens.size()) {
         return std::nullopt;
     }
-    return m_tokens.at(m_index);
+    return m_tokens.at(m_index + peekAmount);
 }
 
 Token Ast::supply() {

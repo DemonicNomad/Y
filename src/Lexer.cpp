@@ -54,10 +54,10 @@ std::vector<Token> Lexer::lex() {
 }
 
 std::optional<char> Lexer::nextChar(const int peekAmount) const {
-  if (m_index + peekAmount > m_src.length()) {
+  if (m_index + peekAmount >= m_src.length()) {
     return std::nullopt;
   }
-  return m_src.at(m_index);
+  return m_src.at(m_index + peekAmount);
 }
 
 char Lexer::supply() {

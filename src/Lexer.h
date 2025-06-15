@@ -20,7 +20,7 @@ private:
     const std::string m_src{};
     int m_index{};
 
-    [[nodiscard]] std::optional<char> nextChar(int peekAmount = 1) const;
+    [[nodiscard]] std::optional<char> nextChar(int peekAmount = 0) const;
 
     char supply();
 };
