@@ -15,10 +15,14 @@
 
 \maketitle
 
-\begin{align}
-    [\text{Exit}] \to exit([\text{Expr}])
-    \\
-    [\text{Expr}] \to \text{int\_lit}
-\end{align}
+\begin{flalign}
+    & [\text{app}] \to [\text{statement}]^* \\
+    & [\text{statement}] \to
+     \begin{cases}
+        & exit(\text{[expr]}) \\
+        & var\;\text{id}\;\text{\{int\_lit\}} \\
+     \end{cases} \\
+    & [\text{expr}] \to \text{int\_lit}
+\end{flalign}
 
 \end{document}
