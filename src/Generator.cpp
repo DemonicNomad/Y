@@ -2,7 +2,7 @@
 // Created by mikah on 12.06.2025.
 //
 
-#include "Generation.h"
+#include "Generator.h"
 
 std::string Generator::generate() const {
     std::stringstream output;

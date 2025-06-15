@@ -13,14 +13,13 @@ std::vector<Token> Lexer::lex() {
   std::string buf{};
 
   while (nextChar().has_value()) {
-    // Always has value so no issue
     if (std::isalpha(nextChar().value())) {
       buf.push_back(supply());
       while (nextChar().has_value() && std::isalnum(nextChar().value())) {
         buf.push_back(supply());
       }
       if (buf == "exit") {
-        tokens.push_back(Token{TokenType::EXIT, std::nullopt});
+        tokens.emplace_back(TokenType::EXIT, std::nullopt);
         buf.clear();
       }
       else {
@@ -33,11 +32,19 @@ std::vector<Token> Lexer::lex() {
       while (nextChar().has_value() && std::isdigit(nextChar().value())) {
         buf.push_back(supply());
       }
-      tokens.push_back(Token{TokenType::INT_LIT, buf});
+      tokens.emplace_back(TokenType::INT_LIT, buf);
       buf.clear();
     }
+    else if (nextChar().value() == '(') {
+      supply();
+      tokens.emplace_back(TokenType::OPEN_PAREN, std::nullopt);
+    }
+    else if (nextChar().value() == ')') {
+      supply();
+      tokens.emplace_back(TokenType::CLOSE_PAREN, std::nullopt);
+    }
     else if (nextChar().has_value() && nextChar().value() == '$') {
-      tokens.push_back(Token{TokenType::ENDL, std::nullopt});
+      tokens.emplace_back(TokenType::ENDL, std::nullopt);
       supply();
     }
     else if (nextChar().has_value() && std::isspace(nextChar().value())) {
@@ -54,10 +61,13 @@ std::vector<Token> Lexer::lex() {
 }
 
 std::optional<char> Lexer::nextChar(const int peekAmount) const {
-  if (m_index + peekAmount > m_src.length()) {
+  if (m_index + peekAmount >= m_src.length()) {
     return std::nullopt;
   }
-  return m_src.at(m_index);
+  return m_src.at(m_index + peekAmount);
 }
 
-char Lexer::supply() { return m_src.at(m_index++); }
+char Lexer::supply() {
+  m_index++;
+  return m_src.at(m_index - 1);
+}

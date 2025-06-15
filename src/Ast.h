@@ -19,7 +19,7 @@ private:
 
     std::optional<Node::EXPR> parse_expr();
 
-    [[nodiscard]] std::optional<Token> nextToken(const int amount = 1) const;
+    [[nodiscard]] std::optional<Token> nextToken(int peekAmount = 0) const;
 
     Token supply();
 };

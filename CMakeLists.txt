@@ -9,6 +9,6 @@ add_executable(YLang src/main.cpp
         src/Lexer.cpp
         src/Lexer.h
         src/Token.h
-        src/Generation.cpp
-        src/Generation.h
+        src/Generator.cpp
+        src/Generator.h
         src/Nodes.h)

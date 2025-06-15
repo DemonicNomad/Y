@@ -6,7 +6,7 @@
 #include <optional>
 #include <string>
 
-enum class TokenType { EXIT, INT_LIT, ENDL };
+enum class TokenType { EXIT, INT_LIT, ENDL, OPEN_PAREN, CLOSE_PAREN };
 
 struct Token {
     TokenType type{TokenType::ENDL};
